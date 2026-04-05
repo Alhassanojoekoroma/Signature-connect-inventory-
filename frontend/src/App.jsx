@@ -26,7 +26,7 @@ const PhoneFrame = ({ children, showNav, screen }) => {
     if (nav === 'home') {
       children.props.onNavigate('dashboard');
     } else if (nav === 'scan') {
-      children.props.onNavigate('products');
+      children.props.onNavigate('scan');
     } else if (nav === 'products') {
       children.props.onNavigate('products');
     }
@@ -349,9 +349,9 @@ const AppContent = () => {
             <NavBtn
               icon="⬡"
               label="Scan"
-              active={screen === 'products'}
+              active={screen === 'scan'}
               light={['detail', 'issue', 'return', 'stock'].includes(screen)}
-              onClick={() => handleNavigate('products')}
+              onClick={() => handleNavigate('scan')}
             />
             <NavBtn
               icon="☰"
