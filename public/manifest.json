@@ -1,0 +1,22 @@
+{
+  "name": "Signature Connect Inventory",
+  "short_name": "SC Inventory",
+  "description": "Inventory tracking app for managing stock, issuing items, and logging returns",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0F0F",
+  "theme_color": "#AAEF35",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
