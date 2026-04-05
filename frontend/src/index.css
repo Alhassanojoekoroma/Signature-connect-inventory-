@@ -1,0 +1,34 @@
+* {
+  font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0F0F0F;
+  color: #fff;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+input, select, button {
+  font-family: inherit;
+}
+
+input::placeholder {
+  color: #9A9A9A;
+}
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
