@@ -1,34 +1,65 @@
-import axios from 'axios';
+/**
+ * API Service Layer
+ * Provides centralized access to all Supabase services
+ * Services are directly imported from their respective modules
+ */
 
-const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
-});
+// Import all services
+export { default as authService } from './authService';
+export { productService, itemService } from './productService';
+export { transactionService } from './transactionService';
+export { default as qrService } from './qrService';
+export { staffService, auditLogService } from './staffService';
+export { default as activityLogService } from '../services/activityLogService';
 
-// Add token to requests
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-export const authAPI = {
-  login: (username, password, role) =>
-    API.post('/api/auth/login', { username, password, role }),
-};
-
+// Legacy support - users can still call these, but they now use Supabase
+export const authAPI = authService;
 export const sheetsAPI = {
-  getProducts: () => API.get('/api/sheets/products'),
-  issueItem: (data) => API.post('/api/sheets/issue', data),
-  returnItem: (data) => API.post('/api/sheets/return', data),
-  addStock: (data) => API.post('/api/sheets/stock', data),
-  getTransactions: () => API.get('/api/sheets/transactions'),
+  // Products
+  getProducts: () => productService.getAllProducts(),
+  
+  // Transactions
+  getTransactions: () => transactionService.getAllTransactions(),
+  
+  // Items
+  addStock: async (data) => {
+    // Creates an item and logs transaction
+    const item = await itemService.createItem(data);
+    await transactionService.addStockTransaction(item.serial_number, data.user_id, data);
+    return item;
+  },
+  
+  issueItem: async (data) => {
+    // Creates issue transaction
+    return transactionService.issueTransaction(
+      data.serial_number,
+      data.user_id,
+      data
+    );
+  },
+  
+  returnItem: async (data) => {
+    // Creates return transaction
+    return transactionService.returnTransaction(
+      data.serial_number,
+      data.user_id,
+      data
+    );
+  },
 };
 
 export const qrAPI = {
-  generateQR: (serial) => API.post('/api/qr/generate', { serial }),
-  generateBatch: (serials) => API.post('/api/qr/batch', { serials }),
+  generateQR: (serial) => qrService.generateQRCode(serial),
+  generateBatch: (serials) =>
+    Promise.all(serials.map((s) => qrService.generateQRCode(s))),
 };
 
-export default API;
+export default {
+  authService,
+  productService,
+  itemService,
+  transactionService,
+  qrService,
+  staffService,
+  auditLogService,
+};
