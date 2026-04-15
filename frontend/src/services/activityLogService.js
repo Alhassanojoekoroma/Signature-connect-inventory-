@@ -4,7 +4,7 @@
  * Activities are auto-generated based on user actions
  */
 
-import { supabase } from './supabaseClient';
+import { supabase } from '../utils/supabaseClient';
 
 /**
  * Log a user login activity
