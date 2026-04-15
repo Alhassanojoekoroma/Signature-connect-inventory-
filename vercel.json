@@ -1,0 +1,21 @@
+{
+  "buildCommand": "cd frontend && npm run build",
+  "devCommand": "cd frontend && npm start",
+  "installCommand": "npm install --prefix frontend",
+  "framework": "react",
+  "env": [
+    "REACT_APP_SUPABASE_URL",
+    "REACT_APP_SUPABASE_ANON_KEY",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+  ],
+  "outputDirectory": "frontend/build",
+  "public": false,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "cleanUrls": true
+}
